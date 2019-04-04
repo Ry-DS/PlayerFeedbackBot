@@ -26,4 +26,28 @@ public class Config {
         this.games.addAll(Arrays.asList(games));
 
     }
+
+    public String getSlackToken() {
+        return slackToken;
+    }
+
+    public String getDiscordToken() {
+        return discordToken;
+    }
+
+    public List<Game> getGames() {
+        return games;
+    }
+
+    public int getVoteCapSuggestions() {
+        return voteCapSuggestions;
+    }
+
+    public int getMaxSuggestionsPerDay() {
+        return maxSuggestionsPerDay;
+    }
+
+    public long getPollDuration() {
+        return pollDuration;
+    }
 }
