@@ -1,5 +1,6 @@
 package me.simplyballistic.playerfeedbackbot;
 
+import ch.qos.logback.classic.Level;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import me.simplyballistic.playerfeedbackbot.bot.DiscordHandler;
@@ -16,15 +17,16 @@ import java.io.IOException;
  *
  * @author SimplyBallistic
  **/
-public class Main {
+public class PlayerFeedbackBot {
     private Gson gson;
     private Config config;
     private SlackHandler slackHandler;
     private DiscordHandler discordHandler;
     private Logger log = LoggerFactory.getLogger(getClass());
 
-    public Main() {
+    public PlayerFeedbackBot() {
         gson = new GsonBuilder().setPrettyPrinting().create();
+        ((ch.qos.logback.classic.Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME)).setLevel(Level.INFO);
         log.info("Loading config...");
 
         config = loadConfig();
@@ -46,7 +48,7 @@ public class Main {
         discordHandler = new DiscordHandler(config.getDiscordToken());
         try {
             discordHandler.connect();
-        } catch (IOException e) {
+        } catch (Exception e) {
 
             log.error("Failed to connect to Discord with token: " + config.getDiscordToken());
             log.error("Shutting down...");
@@ -60,7 +62,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        new Main();
+        new PlayerFeedbackBot();
     }
 
     private Config loadConfig() {//TODO
