@@ -14,9 +14,9 @@ public abstract class BotConnection {
         this.token = token;
     }
 
-    protected String getToken() {
+    public String getToken() {
         return token;
     }
 
-    abstract void connect() throws IOException;
+    public abstract void connect() throws IOException;
 }
