@@ -19,16 +19,19 @@ import java.util.List;
  **/
 public class Config {
     private String slackToken, discordToken;
+    private static File file = new File(System.getProperty("user.dir") + File.separator + "CONFIG.json");
     private List<Game> games;
     private int voteCapSuggestions;
     private int maxSuggestionsPerDay;
     private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    private static File file = new File(System.getProperty("user.dir") + File.separator + "config.json");
+    private String pollDiscordChat, suggestionsDiscordChat;
     private long pollDurationMs;
 
-    public Config(String slackToken, String discordToken, int voteCapSuggestions, int maxSuggestionsPerDay, long pollDuration, Game... games) {
+    public Config(String slackToken, String discordToken, String pollDiscordChat, String suggestionsDiscordChat, int voteCapSuggestions, int maxSuggestionsPerDay, long pollDuration, Game... games) {
         this.slackToken = slackToken;
         this.discordToken = discordToken;
+        this.pollDiscordChat = pollDiscordChat;
+        this.suggestionsDiscordChat = suggestionsDiscordChat;
         this.voteCapSuggestions = voteCapSuggestions;
         this.maxSuggestionsPerDay = maxSuggestionsPerDay;
         this.pollDurationMs = pollDuration;
@@ -38,7 +41,7 @@ public class Config {
     }
 
     public Config() {
-        this("", "", 20, 2, 24 * 60 * 60 * 1000,
+        this("", "", "polls", "suggestions", 20, 2, 24 * 60 * 60 * 1000,
                 new Game("exampleGame", "project-exampleGame", "exampleGame-suggestions"));
 
     }
@@ -92,5 +95,13 @@ public class Config {
 
     public long getPollDurationMs() {
         return pollDurationMs;
+    }
+
+    public String getPollDiscordChat() {
+        return pollDiscordChat;
+    }
+
+    public String getSuggestionsDiscordChat() {
+        return suggestionsDiscordChat;
     }
 }

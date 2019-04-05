@@ -19,10 +19,11 @@ import java.io.IOException;
  **/
 public class PlayerFeedbackBot {
     private Gson gson;
-    private Config config;
+    private static Config config;
     private SlackHandler slackHandler;
     private DiscordHandler discordHandler;
     private Logger log = LoggerFactory.getLogger(getClass());
+
 
     public PlayerFeedbackBot() {
         gson = new GsonBuilder().setPrettyPrinting().create();
@@ -52,6 +53,9 @@ public class PlayerFeedbackBot {
             log.error("Shutting Down...");
             return;
         }
+        log.info("Connections Successful!");
+        log.info("Matching Config Channels to Slack and Discord Channels...");
+
 
 
     }
@@ -78,5 +82,9 @@ public class PlayerFeedbackBot {
             return null;
 
         }
+    }
+
+    public static Config getConfig() {
+        return config;
     }
 }
