@@ -32,4 +32,6 @@ public abstract class BotConnection {
     public abstract void connect() throws IOException;
 
     public abstract boolean registerGame(Game game);
+
+    public abstract void disconnect();
 }

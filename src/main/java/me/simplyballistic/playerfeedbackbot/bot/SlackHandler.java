@@ -29,6 +29,10 @@ public class SlackHandler extends BotConnection {
 
     @Override
     public boolean registerGame(Game game) {
+        if (game.getSlackChannelName() == null) {
+            getLogger().warn("Game " + game.getGameName() + " doesn't have a slack channel name!");
+            return false;
+        }
         SlackChannel channel = session.findChannelByName(game.getSlackChannelName());
         if (channel == null) {
             getLogger().warn("Slack Channel " + game.getSlackChannelName() + " doesn't exist!");
@@ -41,6 +45,17 @@ public class SlackHandler extends BotConnection {
         game.setSlackChannel(channel);
         return true;
 
+    }
+
+    @Override
+    public void disconnect() {
+        if (session.isConnected()) {
+            try {
+                session.disconnect();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 

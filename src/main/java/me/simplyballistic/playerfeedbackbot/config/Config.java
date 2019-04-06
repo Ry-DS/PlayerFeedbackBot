@@ -19,7 +19,7 @@ import java.util.List;
  **/
 public class Config {
     private String slackToken, discordToken;
-    private static File file = new File(System.getProperty("user.dir") + File.separator + "CONFIG.json");
+    private static File file = new File(System.getProperty("user.dir") + File.separator + "config.json");
     private List<Game> games;
     private int voteCapSuggestions;
     private int maxSuggestionsPerDay;
