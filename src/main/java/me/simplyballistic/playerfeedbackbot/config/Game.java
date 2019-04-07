@@ -1,6 +1,7 @@
 package me.simplyballistic.playerfeedbackbot.config;
 
 import com.ullink.slack.simpleslackapi.SlackChannel;
+import discord4j.core.object.entity.MessageChannel;
 
 /**
  * Created by SimplyBallistic on 4/04/2019
@@ -10,6 +11,7 @@ import com.ullink.slack.simpleslackapi.SlackChannel;
 public class Game {
     private String gameName, slackChannelName, discordChannelName;
     private transient SlackChannel slackChannel;
+    private transient MessageChannel discordChannel;
 
     public Game(String gameName, String slackChannelName, String discordChannelName) {
         this.gameName = gameName;
@@ -35,5 +37,10 @@ public class Game {
 
     public void setSlackChannel(SlackChannel slackChannel) {
         this.slackChannel = slackChannel;
+    }
+
+    public void setDiscordChannel(MessageChannel discordChannel) {
+
+        this.discordChannel = discordChannel;
     }
 }

@@ -1,8 +1,10 @@
-package me.simplyballistic.playerfeedbackbot.bot;
+package me.simplyballistic.playerfeedbackbot.bot.slack;
 
 import com.ullink.slack.simpleslackapi.SlackChannel;
 import com.ullink.slack.simpleslackapi.SlackSession;
 import com.ullink.slack.simpleslackapi.impl.SlackSessionFactory;
+import me.simplyballistic.playerfeedbackbot.bot.BotConnection;
+import me.simplyballistic.playerfeedbackbot.config.Config;
 import me.simplyballistic.playerfeedbackbot.config.Game;
 
 import java.io.IOException;
@@ -14,8 +16,9 @@ import java.io.IOException;
  **/
 public class SlackHandler extends BotConnection {
     private SlackSession session;
-    public SlackHandler(String token) {
-        super(token);
+
+    public SlackHandler(String token, Config config) {
+        super(token, config);
 
     }
 
@@ -23,8 +26,21 @@ public class SlackHandler extends BotConnection {
     public void connect() throws IOException {
         session = SlackSessionFactory.createWebSocketSlackSession(getToken());
         session.connect();
+        session.addMessagePostedListener((event, session) -> {
+            getConfig().getGames().forEach(game -> {
+                if (game.getSlackChannel() != null && game.getSlackChannel().getId().equals(event.getChannel().getId())) {
+                    processSlackMessage(event.getMessageContent());
+                }
+            });
+        });
 
 
+    }
+
+    private void processSlackMessage(String messageContent) {
+        if (messageContent.toLowerCase().startsWith("/poll")) {
+
+        }
     }
 
     @Override
@@ -43,6 +59,7 @@ public class SlackHandler extends BotConnection {
             return false;
         }
         game.setSlackChannel(channel);
+
         return true;
 
     }

@@ -2,8 +2,8 @@ package me.simplyballistic.playerfeedbackbot;
 
 import ch.qos.logback.classic.Level;
 import me.simplyballistic.playerfeedbackbot.bot.BotConnection;
-import me.simplyballistic.playerfeedbackbot.bot.DiscordHandler;
-import me.simplyballistic.playerfeedbackbot.bot.SlackHandler;
+import me.simplyballistic.playerfeedbackbot.bot.discord.DiscordHandler;
+import me.simplyballistic.playerfeedbackbot.bot.slack.SlackHandler;
 import me.simplyballistic.playerfeedbackbot.config.Config;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +35,7 @@ public class PlayerFeedbackBot {
             return;
         }
         log.info("Connecting to Slack...");
-        slackHandler = new SlackHandler(config.getSlackToken());
+        slackHandler = new SlackHandler(config.getSlackToken(), config);
         if (!connectBot(slackHandler)) {
             log.info("Shutting Down...");
             shutdown();
@@ -44,7 +44,7 @@ public class PlayerFeedbackBot {
 
         log.info("Connecting to Discord...");
 
-        discordHandler = new DiscordHandler(config.getDiscordToken());
+        discordHandler = new DiscordHandler(config.getDiscordToken(), config);
         if (!connectBot(discordHandler)) {
             log.error("Shutting Down...");
             shutdown();
